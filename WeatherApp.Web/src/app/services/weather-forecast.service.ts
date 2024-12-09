@@ -4,7 +4,7 @@ import { environment } from '../../environment';
 import { WeatherForecastModel } from '../model/weather-forecast.model';
 import { Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class WeatherForecastService {
   constructor(private client: HttpClient) {}
 
