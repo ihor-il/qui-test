@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 using WeatherApp.BLL.Abstract;
 using WeatherApp.BLL.Integrations.OpenWeatherMap.Model;
+using WeatherApp.Domain;
 
 namespace WeatherApp.BLL.Integrations.OpenWeatherMap;
 
@@ -10,15 +11,15 @@ internal class OpenWeatherMapService(
     IOptions<OpenWeatherMapConfiguration> options
 ) : IExternalWeatherService
 {
-    public async Task<object> GetWeatherDataAsync(string city, CancellationToken cancellationToken)
+    public async Task<WeatherForecast?> GetWeatherDataAsync(string city, CancellationToken cancellationToken)
     {
-        var query = $"weather?q={city}&appid={options.Value.ApiKey}";
+        var query = $"weather?q={city}&appid={options.Value.ApiKey}&units=metric";
         using var client = httpFactory.CreateClient(nameof(OpenWeatherMapService));
 
         try
         {
-            var result = await client.GetFromJsonAsync<Response>(query, cancellationToken);
-            return result;
+            var response = await client.GetFromJsonAsync<Response>(query, cancellationToken);
+            return response?.ToWeatherForecast();
         }
         catch (HttpRequestException)
         {

@@ -4,4 +4,6 @@ internal class Response
 {
     public Weather Main { get; set; } = new();
     public Wind Wind { get; set; } = new();
+    public string Name { get; set; } = string.Empty;
+    public long Dt { get; set; }
 }
