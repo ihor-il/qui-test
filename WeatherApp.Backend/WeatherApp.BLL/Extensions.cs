@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WeatherApp.BLL.Integrations;
+using WeatherApp.BLL.Abstract;
 using WeatherApp.BLL.Integrations.OpenWeatherMap.Utilities;
 
 namespace WeatherApp.BLL;
@@ -11,6 +11,7 @@ public static class Extensions
     {
         return services
             .AddOpenWeatherMapIntegration(config)
-            .AddScoped<IWeatherService, WeatherService>();
+            .AddScoped<IWeatherService, WeatherService>()
+            .AddScoped<IWeatherHistoryService, WeatherService>();
     }
 }

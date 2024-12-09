@@ -1,6 +1,6 @@
 ﻿using WeatherApp.Domain;
 
-namespace WeatherApp.BLL.Integrations;
+namespace WeatherApp.BLL.Abstract;
 
 public interface IWeatherService
 {

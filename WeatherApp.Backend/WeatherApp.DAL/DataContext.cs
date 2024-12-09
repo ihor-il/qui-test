@@ -5,7 +5,7 @@ namespace WeatherApp.DAL;
 
 public class DataContext(DbContextOptions<DataContext> options) : DbContext(options)
 {
-    public DbSet<WeatherForecastHistory> WeatherForecastRecords { get; } = default!;
+    public DbSet<WeatherForecastHistory> WeatherForecastHistoryRecords { get; protected set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
