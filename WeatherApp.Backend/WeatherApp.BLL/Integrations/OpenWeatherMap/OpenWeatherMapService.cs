@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using AutoMapper;
+using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
 using WeatherApp.BLL.Abstract;
 using WeatherApp.BLL.Integrations.OpenWeatherMap.Model;
@@ -9,7 +10,8 @@ namespace WeatherApp.BLL.Integrations.OpenWeatherMap;
 
 internal class OpenWeatherMapService(
     IHttpClientFactory httpFactory,
-    IOptions<OpenWeatherMapConfiguration> options
+    IOptions<OpenWeatherMapConfiguration> options,
+    IMapper mapper
 ) : IExternalWeatherService
 {
     public async Task<WeatherForecast?> GetWeatherDataAsync(string city, CancellationToken cancellationToken)
@@ -20,7 +22,9 @@ internal class OpenWeatherMapService(
         try
         {
             var response = await client.GetFromJsonAsync<Response>(query, cancellationToken);
-            return response?.ToWeatherForecast();
+            var result = mapper.Map<WeatherForecast>(response);
+            result.RequestedAt = DateTime.UtcNow;
+            return result;
         }
         catch (HttpRequestException)
         {
