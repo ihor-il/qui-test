@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using System.Runtime.CompilerServices;
 using WeatherApp.Api.Abstract;
 using WeatherApp.Api.Utilities;
 
@@ -6,7 +7,7 @@ namespace WeatherApp.Api.Utilities;
 
 public static class Extensions
 {
-    public static IServiceCollection AddAPI(this IServiceCollection services)
+    public static IServiceCollection AddAPI(this IServiceCollection services, IWebHostEnvironment env)
     {
         return services
             .AddApiVersioning()
@@ -14,6 +15,7 @@ public static class Extensions
             .AddSwaggerGen()
             .AddScoped<ISessionService, SessionService>()
             .AddHttpContextAccessor()
+            .SetupCors(env)
             .AddControllers()
             .Services;
     }
@@ -34,5 +36,18 @@ public static class Extensions
             options.SubstituteApiVersionInUrl = true;
         })
         .Services;
+    }
+
+    private static IServiceCollection SetupCors(this IServiceCollection services, IWebHostEnvironment env) 
+    {
+        if (!env.IsDevelopment()) return services;
+
+        return services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(builder =>
+            {
+                builder.AllowAnyMethod().AllowAnyOrigin().AllowAnyHeader();
+            });
+        });
     }
 }
