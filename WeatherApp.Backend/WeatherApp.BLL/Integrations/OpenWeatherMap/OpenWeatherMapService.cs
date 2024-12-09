@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 using WeatherApp.BLL.Abstract;
 using WeatherApp.BLL.Integrations.OpenWeatherMap.Model;
+using WeatherApp.BLL.Integrations.OpenWeatherMap.Utilities;
 using WeatherApp.Domain;
 
 namespace WeatherApp.BLL.Integrations.OpenWeatherMap;

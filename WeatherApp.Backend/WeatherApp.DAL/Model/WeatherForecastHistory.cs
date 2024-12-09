@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace WeatherApp.DAL.Model;
 
-internal class WeatherForecastHistory
+public class WeatherForecastHistory
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }

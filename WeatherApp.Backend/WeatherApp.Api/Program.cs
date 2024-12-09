@@ -1,6 +1,6 @@
 using WeatherApp.Api;
 using WeatherApp.BLL;
-using WeatherApp.DAL;
+using WeatherApp.DAL.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 

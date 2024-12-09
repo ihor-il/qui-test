@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WeatherApp.BLL.Integrations;
-using WeatherApp.BLL.Integrations.OpenWeatherMap;
+using WeatherApp.BLL.Integrations.OpenWeatherMap.Utilities;
 
 namespace WeatherApp.BLL;
 

@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WeatherApp.DAL\WeatherApp.DAL.csproj" />
     <ProjectReference Include="..\WeatherApp.Domain\WeatherApp.Domain.csproj" />
   </ItemGroup>
 

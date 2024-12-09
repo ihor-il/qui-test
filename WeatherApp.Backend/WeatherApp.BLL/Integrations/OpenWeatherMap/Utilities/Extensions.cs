@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using WeatherApp.BLL.Abstract;
 
-namespace WeatherApp.BLL.Integrations.OpenWeatherMap;
+namespace WeatherApp.BLL.Integrations.OpenWeatherMap.Utilities;
 
 internal static class Extensions
 {
@@ -15,6 +15,7 @@ internal static class Extensions
                 opt.BaseAddress = new Uri(OpenWeatherMapConfiguration.BaseURL);
             })
             .Services
-            .AddScoped<IExternalWeatherService, OpenWeatherMapService>();
+            .AddScoped<IExternalWeatherService, OpenWeatherMapService>()
+            .AddAutoMapper(typeof(OpenWeatherMapProfile));
     }
 }

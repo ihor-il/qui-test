@@ -1,4 +1,4 @@
-﻿namespace WeatherApp.BLL.Integrations.OpenWeatherMap;
+﻿namespace WeatherApp.BLL.Integrations.OpenWeatherMap.Utilities;
 
 internal class OpenWeatherMapConfiguration
 {
