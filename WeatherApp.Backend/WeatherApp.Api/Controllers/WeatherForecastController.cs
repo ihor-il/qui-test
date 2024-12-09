@@ -8,7 +8,7 @@ namespace WeatherApp.Api.Controllers;
 [ApiVersion(1)]
 [ApiController]
 [Route("api/v{v:apiVersion}")]
-public class WeatherForecastController(ILogger<WeatherForecastController> logger, IWeatherService service) : ControllerBase
+public class WeatherForecastController(IWeatherService service, IWeatherHistoryService historyService) : ControllerBase
 {
     [MapToApiVersion(1)]
     [HttpGet("search/{city:required}")]
@@ -18,6 +18,7 @@ public class WeatherForecastController(ILogger<WeatherForecastController> logger
         var result = await service.GetAsync(city, cancellationToken);
         if (result == null) return NotFound();
 
+        await historyService.SaveForecastAsync(Guid.NewGuid(), result, cancellationToken);
         return Ok(result);
     }
 
