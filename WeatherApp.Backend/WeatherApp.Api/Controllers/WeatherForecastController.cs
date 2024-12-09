@@ -1,6 +1,8 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
-using WeatherApp.BLL.Integrations;
+using WeatherApp.Api.Abstract;
+using WeatherApp.Api.Utilities;
+using WeatherApp.BLL.Abstract;
 using WeatherApp.Domain;
 
 namespace WeatherApp.Api.Controllers;
@@ -8,7 +10,7 @@ namespace WeatherApp.Api.Controllers;
 [ApiVersion(1)]
 [ApiController]
 [Route("api/v{v:apiVersion}")]
-public class WeatherForecastController(IWeatherService service, IWeatherHistoryService historyService) : ControllerBase
+public class WeatherForecastController(IWeatherService service, IWeatherHistoryService historyService, ISessionService session) : ControllerBase
 {
     [MapToApiVersion(1)]
     [HttpGet("search/{city:required}")]
@@ -18,14 +20,17 @@ public class WeatherForecastController(IWeatherService service, IWeatherHistoryS
         var result = await service.GetAsync(city, cancellationToken);
         if (result == null) return NotFound();
 
-        await historyService.SaveForecastAsync(Guid.NewGuid(), result, cancellationToken);
+        var sessionId = session.CreateSession();
+
+        await historyService.SaveForecastAsync(sessionId, result, cancellationToken);
         return Ok(result);
     }
 
     [MapToApiVersion(1)]
     [HttpGet("history")]
-    public Task<object> GetHistoryAsync()
+    public async Task<IEnumerable<WeatherForecast>> GetHistoryAsync(CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var sessionId = session.CreateSession();
+        return await historyService.GetHistoryAsync(sessionId, cancellationToken);
     }
 }

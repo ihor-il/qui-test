@@ -1,6 +1,8 @@
 ﻿using Asp.Versioning;
+using WeatherApp.Api.Abstract;
+using WeatherApp.Api.Utilities;
 
-namespace WeatherApp.Api;
+namespace WeatherApp.Api.Utilities;
 
 public static class Extensions
 {
@@ -10,6 +12,8 @@ public static class Extensions
             .AddApiVersioning()
             .AddEndpointsApiExplorer()
             .AddSwaggerGen()
+            .AddScoped<ISessionService, SessionService>()
+            .AddHttpContextAccessor()
             .AddControllers()
             .Services;
     }

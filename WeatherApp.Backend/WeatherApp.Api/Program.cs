@@ -1,4 +1,4 @@
-using WeatherApp.Api;
+using WeatherApp.Api.Utilities;
 using WeatherApp.BLL;
 using WeatherApp.DAL.Utilities;
 
