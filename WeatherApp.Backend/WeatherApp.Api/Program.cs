@@ -1,32 +1,15 @@
-
-using Asp.Versioning;
+using WeatherApp.Api;
 using WeatherApp.BLL;
+using WeatherApp.DAL;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddApiVersioning(options =>
-{
-    options.DefaultApiVersion = new ApiVersion(1);
-    options.ReportApiVersions = true;
-    options.AssumeDefaultVersionWhenUnspecified = true;
-    options.ApiVersionReader = new UrlSegmentApiVersionReader();
-})
-.AddMvc()
-.AddApiExplorer(options =>
-{
-    options.GroupNameFormat = "'v'V";
-    options.SubstituteApiVersionInUrl = true;
-});
-
-builder.Services.AddBLL(builder.Configuration);
-
-builder.Services.AddControllers();
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services
+    .AddDAL(builder.Configuration)
+    .AddBLL(builder.Configuration)
+    .AddAPI();
 
 var app = builder.Build();
-
 
 if (app.Environment.IsDevelopment())
 {
