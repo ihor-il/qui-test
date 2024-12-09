@@ -1,1 +1,13 @@
-<p>search works!</p>
+<mat-form-field appearance="outline">
+  <input matInput [(ngModel)]="prompt">
+</mat-form-field>
+
+<button mat-flat-button (click)="search()">Search</button>
+
+<ng-container *ngIf="sub != undefined && sub.closed; else loading">
+  <app-weather-data [data]="result!"></app-weather-data>
+</ng-container>
+
+<ng-template #loading>
+  Loading stuff...
+</ng-template>

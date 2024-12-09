@@ -1,1 +1,4 @@
-<p>history works!</p>
+<button (click)="reload()">Reload</button>
+@for (item of data$ | async; track $index) {
+  <app-weather-data [data]="item"></app-weather-data>
+}
