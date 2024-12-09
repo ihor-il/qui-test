@@ -1,18 +1,24 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
+using WeatherApp.BLL.Integrations;
+using WeatherApp.Domain;
 
 namespace WeatherApp.Api.Controllers;
 
 [ApiVersion(1)]
 [ApiController]
 [Route("api/v{v:apiVersion}")]
-public class WeatherForecastController(ILogger<WeatherForecastController> logger) : ControllerBase
+public class WeatherForecastController(ILogger<WeatherForecastController> logger, IWeatherService service) : ControllerBase
 {
     [MapToApiVersion(1)]
     [HttpGet("search/{city:required}")]
-    public Task<object> GetWeatherAsync(string city)
+    [ProducesResponseType<WeatherForecast>(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetWeatherAsync(string city, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var result = await service.GetAsync(city, cancellationToken);
+        if (result == null) return NotFound();
+
+        return Ok(result);
     }
 
     [MapToApiVersion(1)]

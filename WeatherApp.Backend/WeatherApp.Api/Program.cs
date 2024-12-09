@@ -1,5 +1,6 @@
 
 using Asp.Versioning;
+using WeatherApp.BLL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,7 @@ builder.Services.AddApiVersioning(options =>
     options.SubstituteApiVersionInUrl = true;
 });
 
+builder.Services.AddBLL(builder.Configuration);
 
 builder.Services.AddControllers();
 
